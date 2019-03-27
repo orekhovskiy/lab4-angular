@@ -33,12 +33,13 @@ function validateLogin(form) {
     return true;
 }
 
-function validateInput(form) {
+function validateInput() {
     function isNumeric(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
-    var y = form.Y.value;
+    var y = document.forms["form"]["Y"].value;
+    alert(y);
     var error = "";
 
     if (!isNumeric(y)) error = "Y введён некорректно."

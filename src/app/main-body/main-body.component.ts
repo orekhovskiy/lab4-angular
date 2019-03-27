@@ -35,12 +35,12 @@ export class MainBodyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*let xhrCheck = new XMLHttpRequest();
+    let xhrCheck = new XMLHttpRequest();
     xhrCheck.open('GET', 'http://localhost:8080/lab4_war/rest/user/checkUser?login=' + this.login +'&password=' + this.password, false);
     xhrCheck.send();
     if (xhrCheck.status !== 200) {
       document.forms["logout"].submit();
-    }*/
+    }
 
     this.canvas = document.getElementById("canvas");
     this.context = this.canvas.getContext("2d");
@@ -175,20 +175,19 @@ export class MainBodyComponent implements OnInit {
 
     this.points.push( { x: x, y: y, r: r, hit: this.check(x, y, r) } );
 
-    document.forms["click_form"]["X"].value = x;
-    document.forms["click_form"]["Y"].value = y;
-    document.forms["click_form"]["R"].value = r;
-
-    document.forms["click_form"].submit();
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:8080/lab4_war/rest/point/addpoint?x=' + x + '&y=' + y + '&r=' + r, false);
+    xhr.send();
+    if (xhr.status != 200) alert("Ошибка " + xhr.status + ": " + xhr.statusText);
 
     this.updateCanvas();
   }
 
-  onFormSubmit() {
+  onFormSubmit(): void {
     function isNumeric(value: any): boolean {
       return !isNaN(value - parseFloat(value));
     }
-
+    this.validateInput();
     if (document.getElementById("errorLabel").innerText != "") return;
 
     let y: number = document.forms["form"]["Y"].value;
@@ -196,20 +195,73 @@ export class MainBodyComponent implements OnInit {
 
     let x: number = document.forms["form"]["X"].value;
     let r: number = document.forms["form"]["R"].value;
-    this.points.push( { x: x, y: y, r: r, hit: this.check(x, y, r) } );
+    //this.points.push( { x: x, y: y, r: r, hit: this.check(x, y, r) } );
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:8080/lab4_war/rest/point/addpoint?x=' + x + '&y=' + y + '&r=' + r, false);
+    xhr.send();
+    if (xhr.status != 200) alert("Ошибка " + xhr.status + ": " + xhr.statusText);
 
-    this.updateCanvas();
-  }
-
-  onRadiusChange(r: number) {
-    if (r <= 0) {
-      document.forms["form"]["R"].value = 0;
-    } else {
-      document.forms["form"]["R"].value = r;
+    xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:8080/lab4_war/rest/point/getpoints', false);
+    xhr.send();
+    if (xhr.status == 200) {
+      this.points = JSON.parse(xhr.responseText);
     }
-    
+    else alert("Ошибка " + xhr.status + ": " + xhr.statusText);
+
     this.updateCanvas();
   }
+
+  validateInput() {
+    function isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    var y = document.forms["form"]["Y"].value;
+    alert(y);
+    var error = "";
+
+    if (!isNumeric(y)) error = "Y введён некорректно."
+    else if (y < -5 || y > 5) error = "Y должен быть в диапазоне от -5 до 5.";
+
+    var selected = false;
+    var input = document.getElementsByName("xGroup");
+            for (var i = 0; i < input.length; i++){
+                if (input[i].checked){
+                    selected = true;
+                    break;
+                }
+            }
+    if (!selected) error = "Выберите X.";
+
+    var selected = false;
+    
+    var input = document.getElementsByName("rGroup");
+    for (var i = 0; i < input.length; i++){
+        if (input[i].checked){
+            selected = true;
+            break;
+        }
+    }
+    if (!selected) error = "Выберите R.";
+    if (document.forms["form"]["R"].value <= 0) error = "Выберите R больший нуля."
+    if (error){
+      document.getElementById("errorLabel").innerText = error;
+        return false;
+    }
+    document.getElementById("errorLabel").innerText = "";
+    return true;
+}
+
+onRadiusChange(r: number) {
+  if (r <= 0) {
+    document.forms["form"]["R"].value = 0;
+  } else {
+    document.forms["form"]["R"].value = r;
+  }
+  
+  this.updateCanvas();
+}
 
   onXSelect(x: number) {
     document.forms["form"]["X"].value = x;

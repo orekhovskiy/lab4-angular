@@ -5,6 +5,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class TruncPipe implements PipeTransform {
    transform(val : number) : string {
+      //return val.toFixed(2);
       return val.toFixed(2);
    }
 }
