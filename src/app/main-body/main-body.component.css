@@ -1,0 +1,36 @@
+.btn {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  background: #eaeaea !important;
+  border: 2px solid #183642;
+  border-radius: 0 !important;
+  box-shadow: black;
+  color: #183642 !important;
+  font-family: Helvetica;
+  font-size: 1em;
+}
+
+canvas {
+  background-color: white;
+  border-radius: 10px;
+  position: center;
+  width: 33vw;
+  height: 33vw;
+}
+
+table {
+  background-color: lightgray;
+  color: black;
+}
+
+.radio {
+  text-align: left;
+  color: white;
+}
+
+.label {
+  font-family: Helvetica;
+  margin-top: 4px;
+  margin-left: 3px;
+  color: #183642;
+}

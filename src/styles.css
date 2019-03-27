@@ -1,0 +1,47 @@
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css");
+
+body, html {
+  background-size: 100%;
+  background: url(assets/back.png) fixed;
+  margin: 0;
+  color: #183642 !important;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.block {
+  background-color: #eaeaea;
+  font-size: 20px;
+  font-family: serif;
+  color: #183642;
+  min-height: 50px;
+  margin: 0 10px 10px 10px;
+  padding: 10px;
+}
+
+.center{
+  top: 50px;
+  left: 50px;
+}
+
+.full-width{
+  width: 100%;
+}
+
+#VT_logo{
+  width: 50px;
+  height: 50px;
+}
+
+.error-text{
+  color: crimson;
+}
+
+input[type="text"] {
+  border-radius: 0px;
+}
+input[type="password"] {
+  border-radius: 0px;
+}
