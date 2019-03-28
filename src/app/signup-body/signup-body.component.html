@@ -1,7 +1,7 @@
-<form class="login-form" action="http://localhost:8080/lab4_war/rest/user/signup" onsubmit="return validateSignup(this)" method="post">
+<form name="signup_form" class="login-form" action="http://localhost:4200/main">
 
   <div class="form-group row">
-    <label for="inputLogin" class="col-sm-3 col-form-label">Логин: </label>
+    <label for="inputLogin"  class="col-sm-3 col-form-label">Логин: </label>
     <div class="col-sm-9">
       <input id="inputLogin" name="login" type="text" class="form-control" [placeholder]="loginPlaceholder">
     </div>
@@ -22,7 +22,7 @@
   </div>
 
   <label id="errorLabel" class="error-text"></label>
-  <button type="submit" class="btn btn-primary full-width">Регистрация</button>
+  <button type="button" class="btn btn-primary full-width" (click)=onClick() >Регистрация</button>
   <nav>
     <a class="link-signup" routerLink="/login" style="color:#183642">Вход</a>
   </nav>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-body',
@@ -19,12 +18,7 @@ export class MainBodyComponent implements OnInit {
 
   login: string;
   password: string;
-  constructor(private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(params => {
-        this.login = params['login'];
-        this.password = params['password'];
-    });
-    
+  constructor() {    
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://localhost:8080/lab4_war/rest/point/getpoints', false);
     xhr.send();
@@ -35,12 +29,7 @@ export class MainBodyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let xhrCheck = new XMLHttpRequest();
-    xhrCheck.open('GET', 'http://localhost:8080/lab4_war/rest/user/checkUser?login=' + this.login +'&password=' + this.password, false);
-    xhrCheck.send();
-    if (xhrCheck.status !== 200) {
-      document.forms["logout"].submit();
-    }
+    if (sessionStorage.getItem("login") == null) document.forms["logout"].submit();
 
     this.canvas = document.getElementById("canvas");
     this.context = this.canvas.getContext("2d");
@@ -195,7 +184,6 @@ export class MainBodyComponent implements OnInit {
 
     let x: number = document.forms["form"]["X"].value;
     let r: number = document.forms["form"]["R"].value;
-    //this.points.push( { x: x, y: y, r: r, hit: this.check(x, y, r) } );
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://localhost:8080/lab4_war/rest/point/addpoint?x=' + x + '&y=' + y + '&r=' + r, false);
     xhr.send();
